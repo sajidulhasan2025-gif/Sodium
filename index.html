@@ -1,353 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SODIUM • Company</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SODIUM • Modern Tech Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-dark: #050505;
+  --purple: #a855f7;
+  --blue: #6366f1;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255,255,255,0.15);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background: var(--bg-dark); color:#fff; overflow-x:hidden;}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="logo.png">
+/* Animated Background Blobs */
+.blob {position:fixed; border-radius:50%; filter: blur(80px); z-index:-1;}
+.blob1{width:500px;height:500px; background:radial-gradient(circle,#a855f780,transparent); top:10%; left:10%; animation:move1 25s infinite alternate;}
+.blob2{width:600px;height:600px; background:radial-gradient(circle,#6366f180,transparent); bottom:0; right:5%; animation:move2 30s infinite alternate;}
+@keyframes move1{0%{transform:translate(0,0);}100%{transform:translate(50px,60px);}}
+@keyframes move2{0%{transform:translate(0,0);}100%{transform:translate(-70px,-40px);}}
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+/* Header */
+header{position:fixed; top:0;width:100%; z-index:1000; display:flex; justify-content:space-between; align-items:center; padding:15px 60px; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); border-bottom:1px solid rgba(255,255,255,0.1);}
+.logo span{font-weight:700; color:var(--purple); letter-spacing:4px;}
+nav a{margin-left:30px; text-decoration:none;color:#fff;position:relative;}
+nav a::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--blue);transition:0.3s;}
+nav a:hover::after{width:100%;}
 
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-    body {
-      background: radial-gradient(circle at top, #0f1624, #0b0e14 60%);
-      color: #ffffff;
-      overflow-x: hidden;
-    }
+/* Hero */
+.hero{position:relative; padding-top:150px; text-align:left; max-width:900px; margin:0 auto;}
+.hero h1{font-size:56px; line-height:1.2; margin-bottom:20px; animation:slideIn 1.2s ease forwards;}
+.hero span{color:var(--purple);}
+.hero p{max-width:600px;margin-bottom:30px;color:#ccc; animation:fadeIn 2s ease forwards;}
+.hero-logo{position:absolute; right:80px; top:50%; transform:translateY(-50%); width:200px; animation:float 4s ease-in-out infinite; filter:drop-shadow(0 0 40px var(--blue));}
 
-    /* Loading Screen */
-    #loader {
-      position: fixed; inset: 0; background: #0b0e14;
-      display: flex; justify-content: center; align-items: center;
-      z-index: 5000;
-    }
-    #loader img {
-      width: 120px;
-      animation: pulse 1.6s infinite ease-in-out;
-      filter: drop-shadow(0 0 25px rgba(0,234,255,0.8));
-    }
+/* CTA Button */
+.cta-btn{display:inline-block;padding:12px 30px;border-radius:30px;background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:600;font-size:14px;text-decoration:none;position:relative; overflow:hidden; box-shadow:0 0 20px var(--purple); animation:glowPulse 2.5s infinite; transition: transform 0.25s, box-shadow 0.25s;}
+.cta-btn:hover{transform:translateY(-3px) scale(1.05); box-shadow:0 0 40px var(--blue),0 0 60px var(--purple);}
+.cta-btn::before{content:'';position:absolute;top:0;left:-120%;width:120%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,0.6),transparent); animation:shine 3s infinite;}
 
-    /* Navbar */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 1000;
+/* Sections */
+section{padding:100px 60px; max-width:1200px; margin:0 auto;}
+section h2{font-size:36px; margin-bottom:30px; color:var(--purple);}
+.card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:25px;}
+.card{background:var(--glass); backdrop-filter:blur(15px); border:1px solid var(--glass-border); border-radius:24px; padding:25px; transition:transform 0.3s, box-shadow 0.3s;}
+.card:hover{transform:translateY(-10px); box-shadow:0 0 35px var(--purple),0 0 60px var(--blue);}
+.card h3{margin-bottom:15px; color:#fff;}
+.card p{color:#ddd;}
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      padding: 5px 50px; /* USER COMPACT HEADER */
-      height: 64px;
-
-      background: linear-gradient(
-        180deg,
-        rgba(0,0,0,0.75),
-        rgba(0,0,0,0.45)
-      );
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(0,234,255,0.15);
-    }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo img {
-      height: 42px;
-      filter: drop-shadow(0 0 10px rgba(0,234,255,0.6));
-      transition: transform 0.3s ease;
-    }
-    .logo img:hover { transform: rotate(-5deg) scale(1.1); }
-    .logo span { letter-spacing: 4px; color: #00eaff; font-weight: 700; }
-
-    nav a {
-      margin-left: 30px; text-decoration: none; color: #fff; position: relative;
-    }
-    nav a::after {
-      content: ''; position: absolute; left: 0; bottom: -5px;
-      width: 0; height: 2px; background: #00eaff; transition: 0.3s;
-    }
-    nav a:hover::after { width: 100%; }
-
-    /* Sections */
-    section { min-height: auto; padding: 80px 60px; }
-
-    /* Hero */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      position: relative;
-      padding-top: 140px; /* offset for fixed header */
-    }
-    .hero-logo {
-      position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
-      width: 220px; animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 0 40px rgba(0,234,255,0.6));
-    }
-    .hero .eyebrow {
-      color: #6ee7ff;
-      letter-spacing: 3px;
-      font-size: 12px;
-      text-transform: uppercase;
-      opacity: 0.85;
-      margin-bottom: 28px;
-    }
-    .hero h2 {
-      font-size: 52px;
-      line-height: 1.2;
-      margin-bottom: 12px;
-      animation: slideIn 1.2s ease forwards;
-    }
-    .hero .tagline {
-      margin-top: 6px;
-      margin-bottom: 10px;
-      color: #9aa4b2;
-      max-width: 560px;
-      font-size: 14px;
-    }
-    .hero span { color: #00eaff; }
-    .hero p {
-      max-width: 520px;
-      margin-top: 14px;
-      color: #aaa;
-      animation: fadeIn 2s ease forwards;
-    }
-
-    /* CTA Button */
-    .cta-btn {
-      display: inline-block;
-      margin-top: 24px;
-      padding: 10px 22px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #6dff8b, #2cff6a);
-      color: #08110a;
-      font-weight: 600;
-      font-size: 12px;
-      letter-spacing: 0.6px;
-      text-decoration: none;
-      text-align: center;
-      white-space: nowrap;
-      position: relative;
-      overflow: hidden;
-      align-self: flex-start;
-      box-shadow:
-        0 0 14px rgba(109,255,139,0.4),
-        0 0 36px rgba(44,255,106,0.22);
-      animation: glowPulse 2.8s infinite ease-in-out;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .cta-btn:hover {
-      transform: translateY(-3px) scale(1.05);
-      box-shadow:
-        0 0 35px rgba(109,255,139,0.8),
-        0 0 80px rgba(44,255,106,0.6);
-    }
-
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -120%;
-      width: 120%;
-      height: 100%;
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,0.6),
-        transparent
-      );
-      animation: shine 3.5s infinite;
-    }
-
-    @keyframes glowPulse {
-      0%,100% {
-        box-shadow:
-          0 0 18px rgba(109,255,139,0.4),
-          0 0 50px rgba(44,255,106,0.2);
-      }
-      50% {
-        box-shadow:
-          0 0 30px rgba(109,255,139,0.8),
-          0 0 80px rgba(44,255,106,0.55);
-      }
-    }
-
-    @keyframes shine {
-      0% { left: -120%; }
-      60% { left: 120%; }
-      100% { left: 120%; }
-    }
-
-    /* Cards */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
-    .card {
-      background: linear-gradient(145deg, #111520, #0d111b);
-      padding: 20px;
-      border-radius: 14px;
-      border: 1px solid rgba(0,234,255,0.08);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border 0.25s ease;
-    }
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 0 35px rgba(0,234,255,0.35);
-      border: 1px solid rgba(0,234,255,0.4);
-    }
-
-    footer {
-      text-align: center;
-      padding: 24px;
-      color: #777;
-      background: #090c12;
-    }
-
-    /* Animations */
-    @keyframes slideIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes float { 0%,100% { transform: translateY(-50%) translateY(0); } 50% { transform: translateY(-50%) translateY(-20px); } }
-    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-  </style>
+/* Animations */
+@keyframes slideIn{0%{opacity:0;transform:translateY(50px);}100%{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{0%{opacity:0;}100%{opacity:1;}}
+@keyframes float{0%,100%{transform:translateY(-50%) translateY(0);}50%{transform:translateY(-50%) translateY(-20px);}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 18px var(--purple),0 0 50px var(--blue);}50%{box-shadow:0 0 30px var(--purple),0 0 80px var(--blue);}}
+@keyframes shine{0%{left:-120%;}60%{left:120%;}100%{left:120%;}}
+</style>
 </head>
 <body>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
 
-  <!-- Loader -->
-  <div id="loader">
-    <img src="logo.png" alt="Loading Sodium" />
+<header>
+  <div class="logo"><img src="logo.png" height="42"><span>SODIUM</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About Us</a>
+    <a href="#departments">Departments</a>
+    <a href="#events">Events & Competitions</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section id="home" class="hero">
+  <div class="eyebrow">SODIUM • Modern Tech Hub</div>
+  <h1>Building the <span>Future</span><br>Through Innovation</h1>
+  <p>We manage IT, Media, and Gaming departments while empowering members through competitions, content creation, and tech development.</p>
+  <a href="login.html" class="cta-btn">Become a part of our community</a>
+  <img src="logo.png" class="hero-logo" alt="Floating SODIUM logo">
+</section>
+
+<section id="about">
+  <h2>About Us</h2>
+  <div class="card-grid">
+    <div class="card"><h3>Vision & Mission</h3><p>Our vision is to empower creators and innovators across IT, media, and gaming sectors.</p></div>
+    <div class="card"><h3>Core Values</h3><p>Innovation, collaboration, integrity, and community-first mindset.</p></div>
+    <div class="card"><h3>Timeline / Achievements</h3><p>Our journey includes successful events, competitions, and tech products over the years.</p></div>
   </div>
+</section>
 
-  <header>
-    <div class="logo">
-      <img src="logo.png" alt="Sodium Logo" />
-      <span>SODIUM</span>
-    </div>
-    <nav>
-      <a href="#about">Services</a>
-      <a href="#projects">Focus</a>
-      <a href="#gaming">Gaming</a>
-      <a href="#team">Team</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+<section id="departments">
+  <h2>Departments</h2>
+  <div class="card-grid">
+    <div class="card"><h3>Media Department</h3><p>Creating content for YouTube, Facebook, Instagram, and more.</p></div>
+    <div class="card"><h3>IT Department</h3><p>Productive IT: Web, software, and apps for market.<br>Competitive IT: AI, Robotics, and programming competitions.</p></div>
+    <div class="card"><h3>Gaming Department</h3><p>Organizing tournaments, competitions, and community gaming events.</p></div>
+  </div>
+</section>
 
-  <section class="hero">
-    <div class="eyebrow">SODIUM • DIGITAL STUDIO</div>
-    <h2>Building the <span>Future</span><br>With Innovation</h2>
-    <div class="tagline">Web • Gaming Communities • Video Editing • IT • Social Media</div>
-    <p>Sodium is a technology company focused on modern software, design, gaming communities, and digital experiences.</p>
-    <a href="community.html" class="cta-btn">Become a member of our community</a>
-    <img src="logo.png" class="hero-logo" alt="Floating Sodium Logo" />
-  </section>
+<section id="events">
+  <h2>Events & Competitions</h2>
+  <div class="card-grid">
+    <div class="card"><h3>Upcoming</h3><p>See all scheduled events and competitions.</p></div>
+    <div class="card"><h3>Ongoing</h3><p>Active events you can join now.</p></div>
+    <div class="card"><h3>Past</h3><p>Highlights and results from previous events.</p></div>
+  </div>
+</section>
 
-  <section id="about">
-    <h2>What We Do</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>🌐 Web Development</h3>
-        <p>Modern, fast, and responsive websites built with clean code and strong UI/UX.</p>
-      </div>
-      <div class="card">
-        <h3>🎮 Gaming Communities</h3>
-        <p>Minecraft, Roblox, Free Fire communities, servers, events, and digital assets.</p>
-      </div>
-      <div class="card">
-        <h3>🎬 Video Editing</h3>
-        <p>High-quality edits for YouTube, reels, gaming content, and brand videos.</p>
-      </div>
-      <div class="card">
-        <h3>💻 IT Development</h3>
-        <p>Software solutions, tools, automation, and technical system support.</p>
-      </div>
-      <div class="card">
-        <h3>📱 Social Media</h3>
-        <p>Content strategy, growth, branding, and platform management.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="projects">
-    <h2>Our Focus Areas</h2>
-    <div class="card-grid">
-      <div class="card">Custom Websites & Web Apps</div>
-      <div class="card">Gaming Communities & Servers</div>
-      <div class="card">Professional Video Editing</div>
-      <div class="card">IT & Software Development</div>
-      <div class="card">Social Media Growth</div>
-    </div>
-  </section>
-
-  <section id="gaming">
-    <h2>Gaming Division</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>🟩 Minecraft</h3>
-        <p>Servers, plugins, custom items, commands, and community events.</p>
-      </div>
-      <div class="card">
-        <h3>🟥 Roblox</h3>
-        <p>Game development support, assets, scripting, and creator communities.</p>
-      </div>
-      <div class="card">
-        <h3>🔥 Free Fire</h3>
-        <p>Esports-style community, content creation, and competitive support.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="team">
-    <h2>Our Team</h2>
-    <div class="card-grid">
-      <div class="card">
-        <h3>Founder</h3>
-        <p>Vision, leadership, and direction of Sodium.</p>
-      </div>
-      <div class="card">
-        <h3>Web Developer</h3>
-        <p>Websites, web apps, UI/UX, and performance.</p>
-      </div>
-      <div class="card">
-        <h3>Game Community Manager</h3>
-        <p>Minecraft, Roblox, Free Fire servers and events.</p>
-      </div>
-      <div class="card">
-        <h3>Video Editor</h3>
-        <p>Gaming edits, reels, shorts, and promos.</p>
-      </div>
-      <div class="card">
-        <h3>Social Media Manager</h3>
-        <p>Brand growth, content strategy, and engagement.</p>
-      </div>
-    </div>
-  </section>
-
-  
-
-  <section id="contact">
-    <h2>Contact Sodium</h2>
-    <p>Let’s build something powerful together.</p>
-    <div class="card-grid">
-      <div class="card">
-        <p>Email: <strong>contact@sodium.company</strong></p>
-        <p>Discord / Gaming Community</p>
-        <p>Social Media Platforms</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>© 2026 SODIUM Company. All rights reserved.</footer>
-
-  <script>
-    window.addEventListener('load', () => {
-      document.getElementById('loader').style.display = 'none';
-    });
-  </script>
-
+<section id="contact">
+  <h2>Contact SODIUM</h2>
+  <div class="card-grid">
+    <div class="card"><p>Email: <strong>contact@sodium.company</strong></p><p>Social Media Links</p><p>Support Form</p></div>
+  </div>
+</section>
 </body>
 </html>
